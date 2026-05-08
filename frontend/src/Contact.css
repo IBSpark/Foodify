@@ -1,0 +1,128 @@
+/* CONTACT SECTION */
+.contact-section {
+  background: #0f0f0f;
+  color: #ffffff;
+}
+
+/* Subtitle */
+.contact-subtext {
+  color: #bbbbbb;
+  max-width: 500px;
+  margin: auto;
+}
+
+/* INFO BOX */
+.contact-info {
+  background: #1a1a1a;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.contact-info p {
+  color: #d0d0d0;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* FORM */
+.contact-form {
+  background: #1a1a1a;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* INPUTS */
+.contact-form .form-control {
+  background: #f1f1f1;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+}
+
+.contact-form .form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* BUTTON */
+.contact-form .btn-primary {
+  background-color: #c9a24d;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.contact-form .btn-primary:hover {
+  background-color: #b8923f;
+}
+/* CONTACT PAGE */
+.contact-section {
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.contact-subtext {
+  color: #bbbbbb;
+}
+
+/* BOXES */
+.contact-info,
+.contact-form {
+  background: #1a1a1a;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* ICON TEXT */
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #d0d0d0;
+}
+
+/* FORM */
+.contact-form .form-control {
+  background: #f1f1f1;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem;
+}
+
+.contact-form .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* BUTTON */
+.contact-form .btn-primary {
+  background-color: #c9a24d;
+  border: none;
+}
+
+.contact-form .btn-primary:hover {
+  background-color: #b8923f;
+}
+
+/* STATUS */
+.form-status {
+  font-weight: 500;
+}
+
+/* WHATSAPP BUTTON */
+.whatsapp-btn {
+  background-color: #25D366;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe5d;
+}
+
+/* MAP */
+.map-container iframe {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}

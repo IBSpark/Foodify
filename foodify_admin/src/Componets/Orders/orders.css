@@ -1,0 +1,335 @@
+/* =============================== */
+/* Base container */
+/* =============================== */
+.orders-container {
+    width: 95%;
+    margin: 30px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orders-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f7931e 0%, #e6820d 50%, #f7931e 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+/* =============================== */
+/* Title */
+/* =============================== */
+.orders-container h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.orders-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #f7931e, #e6820d);
+    border-radius: 2px;
+}
+
+/* =============================== */
+/* Table styling */
+/* =============================== */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 15px 18px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.orders-table th {
+    background: linear-gradient(135deg, #f7931e 0%, #e6820d 100%);
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.orders-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.orders-table tr:hover {
+    background: #f1f7ff;
+}
+
+/* =============================== */
+/* Customer info styling */
+/* =============================== */
+.customer-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-info strong {
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.special-requests {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 12px;
+    background: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border-left: 3px solid #f7931e;
+}
+
+/* =============================== */
+/* Order items styling */
+/* =============================== */
+.order-items {
+    max-width: 250px;
+}
+
+.order-item {
+    margin-bottom: 4px;
+    padding: 4px 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    font-size: 13px;
+    border-left: 3px solid #28a745;
+}
+
+.order-item:last-child {
+    margin-bottom: 0;
+}
+
+/* =============================== */
+/* Total price styling */
+/* =============================== */
+.total-price {
+    font-weight: bold;
+    color: #f7931e;
+    font-size: 16px;
+}
+
+/* =============================== */
+/* Status select styling */
+/* =============================== */
+.status-select {
+    padding: 6px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+}
+
+.status-select:focus {
+    outline: none;
+    border-color: #f7931e;
+    box-shadow: 0 0 0 2px rgba(247, 147, 30, 0.25);
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-confirmed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-preparing {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-ready {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-completed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* =============================== */
+/* Delete button styling */
+/* =============================== */
+.delete-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* =============================== */
+/* No data */
+/* =============================== */
+.no-data {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 40px;
+    font-size: 16px;
+}
+
+/* =============================== */
+/* MEDIA QUERIES */
+/* =============================== */
+
+/* Tablet view */
+@media (max-width: 1024px) {
+    .orders-container {
+        width: 98%;
+        padding: 15px;
+    }
+
+    .orders-container h2 {
+        font-size: 22px;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .order-items {
+        max-width: 200px;
+    }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+    .orders-container {
+        width: 100%;
+        margin: 15px auto;
+        padding: 10px;
+    }
+
+    .orders-container h2 {
+        font-size: 20px;
+    }
+
+    .orders-table {
+        font-size: 12px;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 8px 6px;
+    }
+
+    .order-items {
+        max-width: 150px;
+    }
+
+    .order-item {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    .customer-info strong {
+        font-size: 14px;
+    }
+
+    .special-requests {
+        font-size: 11px;
+    }
+}
+
+/* Small mobile view */
+@media (max-width: 480px) {
+    .orders-container {
+        padding: 8px;
+        border-radius: 8px;
+    }
+
+    .orders-container h2 {
+        font-size: 18px;
+    }
+
+    .orders-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 11px;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 6px 4px;
+        min-width: 80px;
+    }
+
+    .order-items {
+        max-width: 120px;
+    }
+
+    .order-item {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+
+    .status-select {
+        padding: 4px 6px;
+        font-size: 11px;
+    }
+
+    .delete-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}

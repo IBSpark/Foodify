@@ -1,0 +1,179 @@
+/* ================================
+   BASE NAVBAR STYLES (Desktop First)
+=================================== */
+
+.navbar {
+    height: 60px;
+    width: auto;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0 20px;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo-icon {
+    margin-right: 8px;
+    font-size: 26px;
+    color: var(--accent-primary);
+}
+
+.logo-text {
+    color: var(--accent-primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    text-shadow: 0 1px 2px var(--shadow-color);
+}
+
+.navbar-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #ffb200;
+    transition: border-color 0.3s ease;
+}
+
+.profile-pic:hover {
+    border-color: #ff8c00;
+}
+
+.user-name {
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.theme-toggle-btn:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-hover);
+}
+
+.theme-toggle-btn:active {
+    transform: translateY(0);
+}
+
+.theme-toggle-btn i {
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn:hover i {
+    transform: rotate(20deg);
+}
+
+.sign-out-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.sign-out-btn:hover {
+    background: #c82333;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: #ffb200;
+    color: #0d1b2a;
+    border: none;
+    padding: 8px 14px;
+    font-size: 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 15px;
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .logo-text {
+        font-size: 24px;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    .profile-pic {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        height: 50px;
+        padding: 0 10px;
+    }
+
+    .navbar-right {
+        gap: 8px;
+    }
+
+    .logo-text {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        font-size: 22px;
+    }
+}
+
