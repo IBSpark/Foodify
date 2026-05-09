@@ -138,11 +138,7 @@ body {
   color: #ffffff;
 }
 
-
-
-
-
-  .reservation-section {
+.reservation-section {
   background: linear-gradient(
     rgba(84, 83, 83, 0.7),
     rgba(110, 108, 108, 0.7)
@@ -151,16 +147,29 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+
+
+  /* .reservation-section {
+  background: linear-gradient(
+    rgba(84, 83, 83, 0.7),
+    rgba(110, 108, 108, 0.7)
+  );
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
 
      /* background: linear-gradient(
       rgba(84, 83, 83, 0.7),
       rgba(110, 108, 108, 0.7)
     ),
     /* background:gray; */
-  background-size: cover;
+  /* background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-} 
+}  */
 
 /* Subtitle */
 /* .section-subtitle {
