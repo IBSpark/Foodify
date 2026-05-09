@@ -2,6 +2,10 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* =========================
+   Header
+========================= */
+
 .main-header {
   background-color: #0f0f0f;
 }
@@ -34,7 +38,9 @@ body {
   background-color: #b18d3f;
 }
 
-
+/* =========================
+   Hero Section
+========================= */
 
 .hero-section {
   position: relative;
@@ -69,6 +75,9 @@ body {
   max-width: 520px;
 }
 
+/* =========================
+   About Section
+========================= */
 
 .about-section {
   background-color: #f8f9fa;
@@ -99,6 +108,9 @@ body {
   object-fit: cover;
 }
 
+/* =========================
+   Menu Section
+========================= */
 
 .menu-section {
   background-color: #ffffff;
@@ -138,59 +150,25 @@ body {
   color: #ffffff;
 }
 
+/* =========================
+   Reservation Section
+========================= */
+
 .reservation-section {
   background: linear-gradient(
     rgba(84, 83, 83, 0.7),
     rgba(110, 108, 108, 0.7)
   );
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-
-
-  /* .reservation-section {
-  background: linear-gradient(
-    rgba(84, 83, 83, 0.7),
-    rgba(110, 108, 108, 0.7)
-  );
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-
-     /* background: linear-gradient(
-      rgba(84, 83, 83, 0.7),
-      rgba(110, 108, 108, 0.7)
-    ),
-    /* background:gray; */
-  /* background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}  */
-
-/* Subtitle */
-/* .section-subtitle {
-  font-size: 0.85rem;
-  letter-spacing: 2px;
-  color: #bbbbbb;
-} */
-
-/* Title */
-.section-title {
-  font-weight: 700;
-  font-size: 2.5rem;
-}
-
-/* Text */
 .reservation-text {
   color: #cfcfcf;
   line-height: 1.7;
 }
 
-/* Form Inputs */
 .reservation-form .form-control {
   padding: 0.9rem 1rem;
   border-radius: 12px;
@@ -204,7 +182,6 @@ body {
   box-shadow: none;
 }
 
-/* Button */
 .reservation-form .btn-primary {
   background-color: #c9a24d;
   border: none;
@@ -217,10 +194,9 @@ body {
   background-color: #b8923f;
 }
 
-/* Right Image Styling */
 .reservation-img {
   border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease;
 }
 
@@ -228,6 +204,9 @@ body {
   transform: scale(1.03);
 }
 
+/* =========================
+   Footer
+========================= */
 
 .footer-section {
   background-color: #0f0f0f;
