@@ -28,7 +28,7 @@ export default function About(){
           make every visit special — whether it’s a casual meal or
           a memorable celebration.
         </p>
-        <a href="#" className="btn btn-primary mt-3 px-4">
+        <a href="/" className="btn btn-primary mt-3 px-4">
           Learn More
         </a>
       </div>
