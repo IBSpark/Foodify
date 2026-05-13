@@ -8,7 +8,7 @@ export default function Navbar(){
         <header className="main-header">
   <nav className="navbar navbar-expand-lg navbar-dark">
     <div className="container">
-      <a className="navbar-brand fw-bold" href="index.html">Pizza Hot Resto</a>
+      <a className="navbar-brand fw-bold" href="index.html">Foodify Restu</a>
 
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#restaurantNav">
         <span className="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@ export default function Navbar(){
             <Link to="/reservation" className="btn btn-primary px-4">Book a Table</Link>
           </li>
           <li className="nav-item ms-lg-2">
-  <Link to="/sign" className="btn btn-outline-light px-1">
+  <Link to="/signModal" className="btn btn-outline-light px-1">
     Sign
   </Link>
 </li>
