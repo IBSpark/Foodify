@@ -19,7 +19,7 @@ export default function Home() {
   <div className="container h-100">
     <div className="row h-100 align-items-center">
       <div className="col-lg-7 text-white">
-        <h1 className="display-4 fw-bold">Foodify Restaurant</h1>
+        <h1 className="display-4 fw-bold">Foodify Resturant</h1>
         <p className="lead mt-3 mb-4">
           Savor the Perfect Harmony of Taste, Presentation, and Elegance in an Atmosphere That Redefines Luxury Dining.
         </p>
