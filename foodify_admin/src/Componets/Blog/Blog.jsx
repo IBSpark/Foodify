@@ -29,18 +29,18 @@ const Blog = ({ showMessage }) => {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    const fetchBlogs = async () => {
+    const fetchBlogs = React.useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/blogs");
             setBlogs(res.data);
         } catch (err) {
             console.error("Error fetching blogs:", err);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchBlogs();
-    }, []);
+    }, [fetchBlogs]);
 
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this blog post?")) {
@@ -73,6 +73,7 @@ const Blog = ({ showMessage }) => {
                 <Typography variant="h5" fontWeight="800">
                     Blog Posts
                 </Typography>
+
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
@@ -111,15 +112,33 @@ const Blog = ({ showMessage }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell sx={{ fontWeight: 700 }}>Image</TableCell>
-                                <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
-                                <TableCell sx={{ fontWeight: 700 }}>Author</TableCell>
-                                <TableCell sx={{ fontWeight: 700 }}>Date</TableCell>
-                                <TableCell sx={{ fontWeight: 700, textAlign: "right" }}>
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    Image
+                                </TableCell>
+
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    Title
+                                </TableCell>
+
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    Author
+                                </TableCell>
+
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    Date
+                                </TableCell>
+
+                                <TableCell
+                                    sx={{
+                                        fontWeight: 700,
+                                        textAlign: "right",
+                                    }}
+                                >
                                     Actions
                                 </TableCell>
                             </TableRow>
                         </TableHead>
+
                         <TableBody>
                             {filteredBlogs.map((blog) => (
                                 <TableRow key={blog._id} hover>
@@ -130,15 +149,25 @@ const Blog = ({ showMessage }) => {
                                             sx={{ width: 60, height: 40 }}
                                         />
                                     </TableCell>
-                                    <TableCell sx={{ fontWeight: 600 }}>{blog.title}</TableCell>
-                                    <TableCell>{blog.author}</TableCell>
+
+                                    <TableCell sx={{ fontWeight: 600 }}>
+                                        {blog.title}
+                                    </TableCell>
+
+                                    <TableCell>
+                                        {blog.author}
+                                    </TableCell>
+
                                     <TableCell>
                                         {new Date(blog.date).toLocaleDateString()}
                                     </TableCell>
+
                                     <TableCell sx={{ textAlign: "right" }}>
                                         <Tooltip title="Delete">
                                             <IconButton
-                                                onClick={() => handleDelete(blog._id)}
+                                                onClick={() =>
+                                                    handleDelete(blog._id)
+                                                }
                                                 sx={{ color: "error.main" }}
                                             >
                                                 <DeleteIcon />
@@ -147,9 +176,16 @@ const Blog = ({ showMessage }) => {
                                     </TableCell>
                                 </TableRow>
                             ))}
+
                             {filteredBlogs.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={5} sx={{ textAlign: "center", py: 5 }}>
+                                    <TableCell
+                                        colSpan={5}
+                                        sx={{
+                                            textAlign: "center",
+                                            py: 5,
+                                        }}
+                                    >
                                         <Typography color="text.secondary">
                                             No blog posts found.
                                         </Typography>
