@@ -11,7 +11,7 @@ import {
     TableRow,
     Paper,
     Button,
-    IconButton,
+    // IconButton,
     CircularProgress,
     Chip,
     alpha,
@@ -53,40 +53,72 @@ const BookingTable = ({ searchQuery = "", showMessage }) => {
     const [loading, setLoading] = useState(true);
     const theme = useTheme();
 
-    useEffect(() => {
-        fetchReservations();
-    }, []);
+    const fetchReservations = React.useCallback(() => {
+    setLoading(true);
 
-    const fetchReservations = () => {
-        setLoading(true);
-        fetch("http://localhost:5000/bookinglist")
-            .then((res) => res.json())
-            .then((data) => {
-                // Auto-delete reservations expired for more than 3 days
-                const toDelete = data.filter(item => daysExpired(item.date) > 3);
-                const remaining = data.filter(item => daysExpired(item.date) <= 3);
+    fetch("http://localhost:3000/bookinglist")
+        .then((res) => res.json())
+        .then((data) => {
+            const toDelete = data.filter(item => daysExpired(item.date) > 3);
+            const remaining = data.filter(item => daysExpired(item.date) <= 3);
 
-                toDelete.forEach(item => {
-                    Axios.delete("http://localhost:5000/deletebooking/" + item._id)
-                        .then(() => console.log(`Auto-deleted expired reservation: ${item.name} (${item.date})`))
-                        .catch(err => console.error("Auto-delete failed:", err));
-                });
-
-                if (toDelete.length > 0 && showMessage) {
-                    showMessage(`${toDelete.length} expired reservation(s) auto-removed`, "info");
-                }
-
-                setReservations(remaining);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Error fetching reservations:", err);
-                setLoading(false);
+            toDelete.forEach(item => {
+                Axios.delete("http://localhost:3000/deletebooking/" + item._id)
+                    .then(() => console.log(`Auto-deleted expired reservation: ${item.name} (${item.date})`))
+                    .catch(err => console.error("Auto-delete failed:", err));
             });
-    };
+
+            if (toDelete.length > 0 && showMessage) {
+                showMessage(`${toDelete.length} expired reservation(s) auto-removed`, "info");
+            }
+
+            setReservations(remaining);
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.error("Error fetching reservations:", err);
+            setLoading(false);
+        });
+}, [showMessage]);
+
+useEffect(() => {
+    fetchReservations();
+}, [fetchReservations]);
+
+    // useEffect(() => {
+    //     fetchReservations();
+    // }, []);
+
+    // const fetchReservations = () => {
+    //     setLoading(true);
+    //     fetch("http://localhost:3000/bookinglist")
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             // Auto-delete reservations expired for more than 3 days
+    //             const toDelete = data.filter(item => daysExpired(item.date) > 3);
+    //             const remaining = data.filter(item => daysExpired(item.date) <= 3);
+
+    //             toDelete.forEach(item => {
+    //                 Axios.delete("http://localhost:3000/deletebooking/" + item._id)
+    //                     .then(() => console.log(`Auto-deleted expired reservation: ${item.name} (${item.date})`))
+    //                     .catch(err => console.error("Auto-delete failed:", err));
+    //             });
+
+    //             if (toDelete.length > 0 && showMessage) {
+    //                 showMessage(`${toDelete.length} expired reservation(s) auto-removed`, "info");
+    //             }
+
+    //             setReservations(remaining);
+    //             setLoading(false);
+    //         })
+    //         .catch((err) => {
+    //             console.error("Error fetching reservations:", err);
+    //             setLoading(false);
+    //         });
+    // };
 
     const dodel = (key) => {
-        Axios.delete("http://localhost:5000/deletebooking/" + key)
+        Axios.delete("http://localhost:3000/deletebooking/" + key)
             .then(() => {
                 setReservations(reservations.filter(item => item._id !== key));
                 if (showMessage) showMessage("Booking marked as complete", "success");
