@@ -54,7 +54,7 @@ const Login = () => {
                         Admin Login
                     </Typography>
                     <Typography variant="body2" color="textSecondary" align="center" sx={{ mb: 3 }}>
-                        Shah's Darbar Admin Panel
+                        Foodify Resturant Admin Panel
                     </Typography>
 
                     {error && (
@@ -101,7 +101,7 @@ const Login = () => {
 
                     <Box sx={{ mt: 4 }}>
                         <Typography variant="caption" color="textSecondary">
-                            &copy; {new Date().getFullYear()} Shah's Darbar Admin Panel
+                            &copy; {new Date().getFullYear()} Foodify Resturant Admin Panel
                         </Typography>
                     </Box>
                 </Paper>
