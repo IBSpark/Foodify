@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import {
     Box,
@@ -23,12 +23,13 @@ import {
     DialogContent,
     DialogActions,
     useTheme,
-    alpha
+    alpha,
+
 } from '@mui/material';
 import {
     MailOutlined as MailIcon,
     Search as SearchIcon,
-    DeleteOutline as DeleteIcon,
+    Delete as DeleteIcon,
     SendOutlined as SendIcon,
     MarkEmailReadOutlined as SubscribedIcon,
     CampaignOutlined as CampaignIcon,
@@ -44,11 +45,7 @@ const Newsletter = ({ showMessage }) => {
     const [mailContent, setMailContent] = useState({ subject: "", message: "" });
     const SENDER_EMAIL = "khanmpir@gmail.com";
 
-    useEffect(() => {
-        fetchSubscribers();
-    }, []);
-
-    const fetchSubscribers = async () => {
+    const fetchSubscribers = useCallback(async () => {
         try {
             setLoading(true);
             const response = await axios.get('http://localhost:5000/newsletter');
@@ -59,7 +56,11 @@ const Newsletter = ({ showMessage }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showMessage]);
+
+    useEffect(() => {
+        fetchSubscribers();
+    }, [fetchSubscribers]);
 
     const handleOpenMail = (email = "") => {
         setSelectedEmail(email);

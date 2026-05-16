@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-  Paper,
+   Paper,
   Typography,
   Box,
   Card,
@@ -19,7 +19,6 @@ import {
   useTheme,
   alpha,
 } from '@mui/material';
-
 import {
   ShoppingBagOutlined as OrdersIcon,
   LocalAtmOutlined as RevenueIcon,
@@ -34,39 +33,35 @@ function Dashboard() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const fetchData = useCallback(async () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
     try {
       setLoading(true);
-
       const [ordersRes, productsRes] = await Promise.all([
-        axios.get('http://localhost:3000/orders'),
-        axios.get('http://localhost:3000/menulist'),
+        axios.get('https://foodify-backend.onrender.com/orders'),
+        axios.get('https://foodify-backend.onrender.com/menulist')
       ]);
-
       setOrders(ordersRes.data);
       setProducts(productsRes.data);
-      setError(null);
     } catch (err) {
-      console.error(err);
-      setError('Failed to load dashboard data. Please check server.');
+      console.error('Error fetching data:', err);
+      setError('Failed to load dashboard data. Please check if the server is running.');
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  };
 
   if (loading) {
     return (
       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress />
-        <Typography sx={{ mt: 2 }}>Loading dashboard...</Typography>
+        <CircularProgress color="primary" />
+        <Typography sx={{ mt: 2 }} color="text.secondary">Loading dashboard...</Typography>
       </Box>
     );
   }
@@ -79,29 +74,30 @@ function Dashboard() {
     );
   }
 
+  // Stats
   const totalOrders = orders.length;
   const totalRevenue = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
   const activeProducts = products.length;
 
-  const recentOrders = orders.slice(0, 4).map(o => ({
-    id: `#${o._id?.slice(-4).toUpperCase()}`,
-    name: o.customerName || 'Guest',
-    items: o.items
-      ? o.items.map(i => `${i.title} (x${i.quantity || 1})`).join(', ')
-      : 'Order items',
-    status: o.status || 'pending',
-    time: new Date(o.orderDate).toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    }),
-  }));
+  // Recent orders — show item names
+  const recentOrders = orders.slice(0, 4).map(o => {
+    const itemsSummary = o.items
+      ? o.items.map(i => `${i.title || 'Item'} (x${i.quantity || 1})`).join(', ')
+      : 'Order items';
+    return {
+      id: `#${o._id?.slice(-4).toUpperCase()}`,
+      name: o.customerName || 'Guest',
+      items: itemsSummary.length > 35 ? itemsSummary.slice(0, 32) + '...' : itemsSummary,
+      status: o.status || 'pending',
+      time: new Date(o.orderDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+    };
+  });
 
-  const categoryColors = ['#f59e0b', '#ef4444', '#16a34a'];
-
+  // Popular items
+  const categoryColors = ['#f59e0b', '#ef4444', '#16a34a', '#3b82f6', '#8b5cf6'];
   const popularItems = products.slice(0, 3).map((p, i) => ({
     name: p.title,
-    label: p.type || 'Item',
+    label: p.type || p.title?.split(' ')[0] || 'Item',
     price: p.price,
     color: categoryColors[i % categoryColors.length],
   }));
@@ -109,83 +105,193 @@ function Dashboard() {
   const getStatusConfig = (status) => {
     const s = status.toLowerCase();
     if (s === 'pending') return { bg: '#fef3c7', color: '#d97706', label: 'PENDING' };
-    if (s === 'preparing') return { bg: '#dbeafe', color: '#2563eb', label: 'PREPARING' };
+    if (s === 'preparing' || s === 'confirmed') return { bg: '#dbeafe', color: '#2563eb', label: 'PREPARING' };
     if (s === 'ready') return { bg: '#dcfce7', color: '#16a34a', label: 'READY' };
     if (s === 'completed') return { bg: '#e0e7ff', color: '#4f46e5', label: 'COMPLETED' };
     return { bg: '#f3f4f6', color: '#6b7280', label: s.toUpperCase() };
   };
 
-  return (
-    <Box sx={{ p: { xs: 2, md: 3 } }}>
+  const statCards = [
+    { value: totalOrders, label: 'Total Orders', icon: OrdersIcon, color: '#f59e0b', bg: '#fef3c7' },
+    { value: `Rs. ${totalRevenue.toLocaleString()}`, label: "Today's Revenue", icon: RevenueIcon, color: '#10b981', bg: '#dcfce7' },
+    { value: activeProducts, label: 'Active Menu Items', icon: MenuIcon, color: '#3b82f6', bg: '#dbeafe' },
+  ];
 
-      <Box display="flex" alignItems="center" sx={{ mb: 3 }}>
-        <RestaurantIcon sx={{ color: 'primary.main', mr: 1 }} />
-        <Typography variant="h5" fontWeight="800">
+  return (
+    <Box sx={{ p: { xs: 2, md: 3 }, maxWidth: '100%', overflow: 'hidden' }}>
+      {/* Header */}
+      <Box display="flex" alignItems="center" sx={{ mb: 3, gap: 1.5 }}>
+        <RestaurantIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+        <Typography variant="h5" fontWeight="800" color="text.primary">
           Restaurant Overview
         </Typography>
       </Box>
 
-      {/* STATS */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2, mb: 3 }}>
-        {[{
-          value: totalOrders,
-          label: 'Total Orders',
-          icon: OrdersIcon,
-        }, {
-          value: `Rs ${totalRevenue}`,
-          label: 'Revenue',
-          icon: RevenueIcon,
-        }, {
-          value: activeProducts,
-          label: 'Menu Items',
-          icon: MenuIcon,
-        }].map((card, i) => (
-          <Card key={i}>
-            <CardContent>
-              <Typography variant="h6">{card.value}</Typography>
-              <Typography variant="body2">{card.label}</Typography>
+      {/* Stat Cards Row */}
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+        gap: 2,
+        mb: 3,
+      }}>
+        {statCards.map((card, i) => (
+          <Card key={i} elevation={1} sx={{ borderRadius: 3, bgcolor: 'background.paper', border: 'none' }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2.5, '&:last-child': { pb: 2.5 } }}>
+              <Box>
+                <Typography variant="h5" fontWeight="800" color="text.primary">
+                  {card.value}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 0.3, fontWeight: 500 }}>
+                  {card.label}
+                </Typography>
+              </Box>
+              <Avatar sx={{ bgcolor: card.bg, width: 48, height: 48, borderRadius: 2.5 }}>
+                <card.icon sx={{ color: card.color, fontSize: 24 }} />
+              </Avatar>
             </CardContent>
           </Card>
         ))}
       </Box>
 
-      {/* CONTENT */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 2 }}>
+      {/* Bottom Row: Recent Orders + Popular Items */}
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', lg: '1.6fr 1fr' },
+        gap: 2,
+      }}>
+        {/* Recent Orders */}
+        <Paper elevation={1} sx={{ p: { xs: 2, md: 3 }, borderRadius: 3, bgcolor: 'background.paper', border: 'none' }}>
+          <Typography variant="h6" fontWeight="700" sx={{ mb: 2 }}>Recent Orders</Typography>
 
-        <Paper sx={{ p: 2 }}>
-          <Typography fontWeight="700" mb={2}>Recent Orders</Typography>
-
-          {recentOrders.map((o, i) => (
-            <React.Fragment key={i}>
-              <ListItem>
-                <ListItemText primary={o.name} secondary={o.items} />
-                <Chip label={getStatusConfig(o.status).label} />
-              </ListItem>
-              {i < recentOrders.length - 1 && <Divider />}
-            </React.Fragment>
-          ))}
+          <List disablePadding>
+            {recentOrders.map((order, index) => {
+              const statusCfg = getStatusConfig(order.status);
+              return (
+                <React.Fragment key={index}>
+                  <ListItem sx={{ py: 1.8, px: 0 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, minWidth: 0 }}>
+                      {/* Order ID badge */}
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          bgcolor: alpha(theme.palette.primary.main, 0.08),
+                          color: 'primary.main',
+                          fontWeight: 800,
+                          px: 1.2,
+                          py: 0.4,
+                          borderRadius: 1.5,
+                          mr: 2,
+                          flexShrink: 0,
+                          fontSize: '11px',
+                        }}
+                      >
+                        {order.id}
+                      </Typography>
+                      <ListItemText
+                        primary={<Typography variant="body2" fontWeight="700">{order.name}</Typography>}
+                        secondary={
+                          <Typography variant="caption" color="text.secondary" noWrap>
+                            {order.items}
+                          </Typography>
+                        }
+                        sx={{ minWidth: 0 }}
+                      />
+                    </Box>
+                    <Box sx={{ textAlign: 'right', flexShrink: 0, ml: 2 }}>
+                      <Chip
+                        label={statusCfg.label}
+                        size="small"
+                        sx={{
+                          fontSize: '10px',
+                          fontWeight: 800,
+                          height: 22,
+                          bgcolor: statusCfg.bg,
+                          color: statusCfg.color,
+                          borderRadius: 1,
+                          mb: 0.3,
+                        }}
+                      />
+                      <Typography variant="caption" color="text.disabled" display="block" sx={{ fontSize: '11px' }}>
+                        {order.time}
+                      </Typography>
+                    </Box>
+                  </ListItem>
+                  {index < recentOrders.length - 1 && <Divider />}
+                </React.Fragment>
+              );
+            })}
+            {recentOrders.length === 0 && (
+              <Box sx={{ py: 4, textAlign: 'center' }}>
+                <Typography color="text.secondary" variant="body2">No orders yet</Typography>
+              </Box>
+            )}
+          </List>
         </Paper>
 
-        <Paper sx={{ p: 2 }}>
-          <Typography fontWeight="700" mb={2}>Popular Items</Typography>
+        {/* Popular Items */}
+        <Paper elevation={1} sx={{ p: { xs: 2, md: 3 }, borderRadius: 3, bgcolor: 'background.paper', border: 'none' }}>
+          <Typography variant="h6" fontWeight="700" sx={{ mb: 2 }}>Popular Items</Typography>
 
-          {popularItems.map((p, i) => (
-            <Box key={i} sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-              <Typography>{p.name}</Typography>
-              <Typography>${p.price}</Typography>
-            </Box>
-          ))}
+          <Box>
+            {popularItems.map((item, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  mb: 1.5,
+                  p: 1.5,
+                  borderRadius: 2.5,
+                  border: `1px solid ${theme.palette.divider}`,
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.03) },
+                  transition: 'background 0.2s',
+                  cursor: 'pointer',
+                }}
+              >
+                {/* Category Label Chip */}
+                <Chip
+                  label={item.label}
+                  size="small"
+                  sx={{
+                    bgcolor: item.color,
+                    color: '#fff',
+                    fontWeight: 700,
+                    fontSize: '10px',
+                    height: 28,
+                    borderRadius: 1.5,
+                    mr: 1.5,
+                    minWidth: 56,
+                  }}
+                />
+                <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+                  <Typography variant="body2" fontWeight="600" noWrap>{item.name}</Typography>
+                  <Typography variant="caption" fontWeight="700" color="primary.main">${item.price}</Typography>
+                </Box>
+                <Typography variant="caption" sx={{ color: '#16a34a', fontWeight: 600, fontSize: '10px', mr: 1 }}>
+                  • AVAILABLE
+                </Typography>
+                <ArrowIcon sx={{ fontSize: 14, color: 'text.disabled' }} />
+              </Box>
+            ))}
+          </Box>
 
           <Button
+            variant="outlined"
             fullWidth
             startIcon={<AddIcon />}
             onClick={() => navigate('/addproduct')}
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              borderStyle: 'dashed',
+              color: 'text.secondary',
+              py: 1.2,
+              borderRadius: 2,
+              '&:hover': { borderStyle: 'dashed' },
+            }}
           >
-            Add Item
+            Add Menu Item
           </Button>
         </Paper>
-
       </Box>
     </Box>
   );
