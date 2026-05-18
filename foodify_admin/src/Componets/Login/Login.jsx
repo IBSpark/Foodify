@@ -1,109 +1,107 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import {
     Box,
     Paper,
     Typography,
     Container,
     Avatar,
-    CircularProgress,
-    Alert,
-    TextField,
-    Button
+    Alert
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import axios from 'axios';
 import './Login.css';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
+    const handleSuccess = async (credentialResponse) => {
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/routes/auth/google`,
+                {
+                    token: credentialResponse.credential,
+                }
+            );
 
-        // Simulating login process without Google Auth
-        setTimeout(() => {
-            if (email === 'ibad@gmail.com' && password === 'ibad123') {
-                localStorage.setItem('adminUser', JSON.stringify({
-                    name: 'Admin User',
-                    email: email,
-                    authenticated: true
-                }));
-                setLoading(false);
-                navigate('/');
-            } else {
-                setError('Invalid email or password.');
-                setLoading(false);
-            }
-        }, 1000);
+            const data = response.data;
+
+            localStorage.setItem('adminUser', JSON.stringify({
+                ...data.user,
+                authenticated: true
+            }));
+
+            localStorage.setItem('token', data.token);
+
+            navigate('/');
+        } catch (error) {
+            console.error(error);
+            alert('Google login failed');
+        }
     };
 
     return (
         <Box className="login-page">
-            <Container maxWidth="xs">
-                <Paper elevation={6} className="login-paper">
-                    <Avatar className="login-avatar">
-                        <LockOutlinedIcon />
+            <Container maxWidth="sm">
+                <Paper
+                    elevation={6}
+                    className="login-paper"
+                    sx={{
+                        p: 6,
+                        borderRadius: 6,
+                        textAlign: 'center',
+                    }}
+                >
+                    <Avatar
+                        sx={{
+                            mx: 'auto',
+                            mb: 3,
+                            bgcolor: '#16a34a',
+                            width: 70,
+                            height: 70,
+                        }}
+                    >
+                        <LockOutlinedIcon sx={{ fontSize: 35 }} />
                     </Avatar>
-                    <Typography component="h1" variant="h5" className="login-title">
+
+                    <Typography
+                        variant="h3"
+                        fontWeight="800"
+                        sx={{ mb: 2 }}
+                    >
                         Admin Login
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" align="center" sx={{ mb: 3 }}>
-                        Foodify Resturant Admin Panel
+
+                    <Typography
+                        variant="h6"
+                        color="text.secondary"
+                        sx={{ mb: 5 }}
+                    >
+                        Foodify Restaurant Admin Panel
                     </Typography>
 
-                    {error && (
-                        <Alert severity="error" sx={{ mb: 2, width: '100%' }}>
-                            {error}
-                        </Alert>
-                    )}
-
-                    <Box component="form" onSubmit={handleLogin} sx={{ mt: 2 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <GoogleLogin
+                            onSuccess={handleSuccess}
+                            onError={() => {
+                                alert('Google Sign-In Failed');
+                            }}
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            disabled={loading}
-                            sx={{ mt: 3, mb: 2, height: 48 }}
-                        >
-                            {loading ? <CircularProgress size={24} /> : 'Sign In'}
-                        </Button>
                     </Box>
 
-                    <Box sx={{ mt: 4 }}>
-                        <Typography variant="caption" color="textSecondary">
-                            &copy; {new Date().getFullYear()} Foodify Resturant Admin Panel
-                        </Typography>
-                    </Box>
+                    <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ mt: 6, display: 'block' }}
+                    >
+                        © {new Date().getFullYear()} Foodify Restaurant Admin Panel
+                    </Typography>
                 </Paper>
             </Container>
         </Box>
