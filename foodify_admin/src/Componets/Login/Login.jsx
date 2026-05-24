@@ -7,9 +7,9 @@ import {
     Typography,
     Container,
     Avatar,
-    
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import axios from 'axios';
 import './Login.css';
 
@@ -27,16 +27,19 @@ const Login = () => {
 
             const data = response.data;
 
-            localStorage.setItem('adminUser', JSON.stringify({
-                ...data.user,
-                authenticated: true
-            }));
+            localStorage.setItem(
+                'adminUser',
+                JSON.stringify({
+                    ...data.user,
+                    authenticated: true,
+                })
+            );
 
             localStorage.setItem('token', data.token);
 
             navigate('/');
         } catch (error) {
-            console.error(error);
+            console.error('Google Login Error:', error);
             alert('Google login failed');
         }
     };
@@ -53,18 +56,20 @@ const Login = () => {
                         textAlign: 'center',
                     }}
                 >
+                    {/* Restaurant Icon */}
                     <Avatar
                         sx={{
                             mx: 'auto',
                             mb: 3,
                             bgcolor: '#16a34a',
-                            width: 70,
-                            height: 70,
+                            width: 80,
+                            height: 80,
                         }}
                     >
-                        <LockOutlinedIcon sx={{ fontSize: 35 }} />
+                        <RestaurantMenuIcon sx={{ fontSize: 42 }} />
                     </Avatar>
 
+                    {/* Title */}
                     <Typography
                         variant="h3"
                         fontWeight="800"
@@ -73,6 +78,7 @@ const Login = () => {
                         Admin Login
                     </Typography>
 
+                    {/* Subtitle */}
                     <Typography
                         variant="h6"
                         color="text.secondary"
@@ -81,6 +87,7 @@ const Login = () => {
                         Foodify Restaurant Admin Panel
                     </Typography>
 
+                    {/* Google Login */}
                     <Box
                         sx={{
                             display: 'flex',
@@ -95,6 +102,7 @@ const Login = () => {
                         />
                     </Box>
 
+                    {/* Footer */}
                     <Typography
                         variant="caption"
                         color="text.secondary"
