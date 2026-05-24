@@ -23,7 +23,7 @@ export default function Home() {
         <p className="lead mt-3 mb-4">
           Savor the Perfect Harmony of Taste, Presentation, and Elegance in an Atmosphere That Redefines Luxury Dining.
         </p>
-        <a href="#menu" className="btn btn-primary btn-lg px-5">
+        <a href="/menu" className="btn btn-primary btn-lg px-5">
           Explore Menu
         </a>
       </div>
