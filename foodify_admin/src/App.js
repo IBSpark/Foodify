@@ -22,7 +22,7 @@ import Blog from "./Componets/Blog/Blog.jsx";
 import AddBlog from "./Componets/Blog/AddBlog.jsx";
 import Login from "./Componets/Login/Login.jsx";
 
-const GOOGLE_CLIENT_ID = "715777577662-dluqo3mr4ppkeamecsbd72rsmose467u.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
