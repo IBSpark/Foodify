@@ -19,7 +19,7 @@ const Login = () => {
     const handleSuccess = async (credentialResponse) => {
         try {
             const response = await axios.post(
-                `${process.env.REACT_APP_API_URL}/routes/auth/google`,
+                `${process.env.REACT_APP_API_URL}/route/auth/google`,
                 {
                     token: credentialResponse.credential,
                 }
