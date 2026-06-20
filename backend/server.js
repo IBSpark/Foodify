@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const googleAuthRoute = require('./controllers/googleAuthRoute');
+const dashboardRoutes = require("./routes/dashboard");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 // ===============================
 
 app.post('/route/auth/google', googleAuthRoute);
+app.use("/route/dashboard", dashboardRoutes);
 
 // ===============================
 // 🔥 Dashboard Required APIs
