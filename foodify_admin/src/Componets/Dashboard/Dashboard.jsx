@@ -27,6 +27,7 @@ import {
   Restaurant as RestaurantIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Dashboard() {
   const [orders, setOrders] = useState([]);
@@ -151,11 +152,11 @@ function Dashboard() {
     <Box sx={{ p: { xs: 2, md: 3 }, maxWidth: '100%', overflow: 'hidden' }}>
       {/* Header */}
       <Box display="flex" alignItems="center" sx={{ mb: 3, gap: 1.5 }}>
-        <RestaurantIcon sx={{ color: 'primary.main', fontSize: 28 }} />
-        <Typography variant="caption" fontWeight="700" color="primary.main">
-  Rs. {item.price}
-</Typography>
-      </Box>
+  <RestaurantIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+  <Typography variant="h5" fontWeight="800" color="text.primary">
+    Restaurant Overview
+  </Typography>
+</Box>
 
       {/* Stat Cards Row */}
       <Box sx={{
@@ -328,4 +329,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Dashboard; 
