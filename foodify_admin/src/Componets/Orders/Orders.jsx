@@ -35,6 +35,8 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
     const [settings, setSettings] = useState(null);
     const theme = useTheme();
 
+    const API_URL = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
         fetchOrders();
         fetchSettings();
@@ -42,7 +44,7 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
 
     const fetchOrders = () => {
         setLoading(true);
-        fetch("http://localhost:5000/orders")
+       fetch(`${API_URL}/route/orders`)
             .then((res) => res.json())
             .then((data) => {
                 setOrders(data);
@@ -56,7 +58,8 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
 
     const fetchSettings = async () => {
         try {
-            const res = await Axios.get("http://localhost:5000/settings");
+           const res = await Axios.get(
+    `${API_URL}/route/settings`);
             setSettings(res.data);
         } catch (err) {
             console.error("Failed to fetch settings", err);
@@ -64,7 +67,7 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
     };
 
     const deleteOrder = (id) => {
-        Axios.delete(`http://localhost:5000/deleteorder/${id}`)
+       Axios.delete(`${API_URL}/route/orders/${id}`)
             .then(() => {
                 setOrders(orders.filter(order => order._id !== id));
                 if (showMessage) showMessage("Order deleted successfully", "success");
@@ -75,8 +78,10 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
             });
     };
 
-    const updateStatus = (orderId, newStatus) => {
-        Axios.put(`http://localhost:5000/updateorder/${orderId}`, { status: newStatus })
+            const updateStatus = (orderId, newStatus) => {
+            Axios.put(`${API_URL}/route/orders/${orderId}`, {
+            status: newStatus,
+})
             .then(() => {
                 setOrders(orders.map(order =>
                     order._id === orderId ? { ...order, status: newStatus } : order

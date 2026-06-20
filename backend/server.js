@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const googleAuthRoute = require('./controllers/googleAuthRoute');
 const dashboardRoutes = require("./routes/dashboard");
+const ordersRoutes = require ("./routes/orders");
+const settingsRoutes = require("./routes/settings");
 
 const app = express();
 
@@ -22,36 +24,15 @@ app.get('/', (req, res) => {
 
 app.post('/route/auth/google', googleAuthRoute);
 app.use("/route/dashboard", dashboardRoutes);
+app.use("/route/orders", ordersRoutes);
+app.use("/route/settings", settingsRoutes);
 
 // ===============================
 // 🔥 Dashboard Required APIs
 // ===============================
 
 // Orders API
-app.get('/api/orders', (req, res) => {
-  res.json([
-    {
-      _id: "1",
-      customerName: "Ali",
-      totalPrice: 1200,
-      status: "pending",
-      orderDate: new Date(),
-      items: [
-        { title: "Burger", quantity: 2 }
-      ]
-    },
-    {
-      _id: "2",
-      customerName: "Ahmed",
-      totalPrice: 800,
-      status: "completed",
-      orderDate: new Date(),
-      items: [
-        { title: "Pizza", quantity: 1 }
-      ]
-    }
-  ]);
-});
+
 
 // Menu API
 app.get('/api/menu', (req, res) => {

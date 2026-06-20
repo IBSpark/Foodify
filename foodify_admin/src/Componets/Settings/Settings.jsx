@@ -26,6 +26,8 @@ import {
 } from "@mui/icons-material";
 import "./Settings.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function Settings({ showMessage }) {
     const theme = useTheme();
     const [loading, setLoading] = useState(true);
@@ -45,7 +47,7 @@ export default function Settings({ showMessage }) {
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const res = await Axios.get("http://localhost:3000/settings");
+                const res = await Axios.get(`${API_URL}/route/settings`)
                 setSettings(res.data);
             } catch (err) {
                 console.error("Failed to fetch settings", err);
@@ -63,7 +65,7 @@ export default function Settings({ showMessage }) {
     const handleSave = async () => {
         setSaving(true);
         try {
-            await Axios.post("http://localhost:3000/settings", settings);
+            await Axios.post(`${API_URL}/route/settings`, settings)
             if (showMessage) showMessage("Settings saved successfully!", "success");
         } catch (err) {
             console.error("Failed to save settings", err);
