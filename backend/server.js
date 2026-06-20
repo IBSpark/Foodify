@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const googleAuthRoute = require('./controllers/googleAuthRoute');
+const googleAuthRoutes = require('./controllers/googleAuthRoute');
 const dashboardRoutes = require("./routes/dashboard");
 const ordersRoutes = require ("./routes/orders");
 const settingsRoutes = require("./routes/settings");
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 // 🔐 Google Auth API
 // ===============================
 
-app.post('/route/auth/google', googleAuthRoute);
+app.post('/route/auth/google', googleAuthRoutes);
 app.use("/route/dashboard", dashboardRoutes);
 app.use("/route/orders", ordersRoutes);
 app.use("/route/settings", settingsRoutes);
