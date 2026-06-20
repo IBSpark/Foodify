@@ -44,9 +44,9 @@ function Dashboard() {
     try {
       setLoading(true);
       const [ordersRes, productsRes] = await Promise.all([
-        axios.get('https://foodify-backend.onrender.com/orders'),
-        axios.get('https://foodify-backend.onrender.com/menulist')
-      ]);
+  axios.get(`${API_URL}/api/orders`),
+  axios.get(`${API_URL}/api/menu`)
+]);
       setOrders(ordersRes.data);
       setProducts(productsRes.data);
     } catch (err) {
@@ -62,6 +62,11 @@ function Dashboard() {
       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="80vh">
         <CircularProgress color="primary" />
         <Typography sx={{ mt: 2 }} color="text.secondary">Loading dashboard...</Typography>
+        <Button variant="contained"
+        startIcon={<AddIcon />}
+        onClick={() => navigate('/addproduct')}>
+        Add Product
+      </Button>
       </Box>
     );
   }
@@ -112,25 +117,51 @@ function Dashboard() {
   };
 
   const statCards = [
-    { value: totalOrders, label: 'Total Orders', icon: OrdersIcon, color: '#f59e0b', bg: '#fef3c7' },
-    { value: `Rs. ${totalRevenue.toLocaleString()}`, label: "Today's Revenue", icon: RevenueIcon, color: '#10b981', bg: '#dcfce7' },
-    { value: activeProducts, label: 'Active Menu Items', icon: MenuIcon, color: '#3b82f6', bg: '#dbeafe' },
-  ];
+  {
+    value: totalOrders,
+    label: 'Total Orders',
+    icon: OrdersIcon,
+    color: '#f59e0b',
+    bg: '#fef3c7'
+  },
+  {
+    value: `Rs. ${totalRevenue.toLocaleString()}`,
+    label: 'Revenue',
+    icon: RevenueIcon,
+    color: '#10b981',
+    bg: '#dcfce7'
+  },
+  {
+    value: activeProducts,
+    label: 'Menu Items',
+    icon: MenuIcon,
+    color: '#3b82f6',
+    bg: '#dbeafe'
+  },
+  {
+    value: orders.filter(o => o.status === 'pending').length,
+    label: 'Pending Orders',
+    icon: OrdersIcon,
+    color: '#ef4444',
+    bg: '#fee2e2'
+  }
+];
 
   return (
     <Box sx={{ p: { xs: 2, md: 3 }, maxWidth: '100%', overflow: 'hidden' }}>
       {/* Header */}
       <Box display="flex" alignItems="center" sx={{ mb: 3, gap: 1.5 }}>
         <RestaurantIcon sx={{ color: 'primary.main', fontSize: 28 }} />
-        <Typography variant="h5" fontWeight="800" color="text.primary">
-          Restaurant Overview
-        </Typography>
+        <Typography variant="caption" fontWeight="700" color="primary.main">
+  Rs. {item.price}
+</Typography>
       </Box>
 
       {/* Stat Cards Row */}
       <Box sx={{
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+        gridTemplateColumns: {  xs: '1fr',sm: 'repeat(2, 1fr)',
+  lg: 'repeat(4, 1fr)' },
         gap: 2,
         mb: 3,
       }}>
