@@ -37,14 +37,11 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
 
     const API_URL = process.env.REACT_APP_API_URL;
 
-    useEffect(() => {
-        fetchOrders();
-        fetchSettings();
-    }, []);
-
+  useEffect(() => {
     const fetchOrders = () => {
         setLoading(true);
-       fetch(`${API_URL}/route/orders`)
+
+        fetch(`${API_URL}/route/orders`)
             .then((res) => res.json())
             .then((data) => {
                 setOrders(data);
@@ -58,13 +55,18 @@ const OrdersTable = ({ searchQuery = "", showMessage }) => {
 
     const fetchSettings = async () => {
         try {
-           const res = await Axios.get(
-    `${API_URL}/route/settings`);
+            const res = await Axios.get(`${API_URL}/route/settings`);
             setSettings(res.data);
         } catch (err) {
             console.error("Failed to fetch settings", err);
         }
     };
+
+    fetchOrders();
+    fetchSettings();
+}, [API_URL]);
+
+   
 
     const deleteOrder = (id) => {
        Axios.delete(`${API_URL}/route/orders/${id}`)
