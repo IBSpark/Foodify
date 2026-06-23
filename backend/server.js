@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+const connectDB = require("./config/db");
+
+connectDB();
 const googleAuthRoute = require('./controllers/googleAuthRoute');
 const dashboardRoutes = require("./routes/dashboard");
 const ordersRoutes = require("./routes/orders");
