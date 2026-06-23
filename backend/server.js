@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 
 connectDB();
 const googleAuthRoute = require('./controllers/googleAuthRoute');
-const dashboardRoutes = require("./routes/dashboard");
+const dashboardRoute = require("./route/dashboard");
 // const ordersRoutes = require("./routes/orders");
 // const settingsRoutes = require("./routes/settings");
 
