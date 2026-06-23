@@ -7,8 +7,8 @@ const connectDB = require("./config/db");
 connectDB();
 const googleAuthRoute = require('./controllers/googleAuthRoute');
 const dashboardRoutes = require("./routes/dashboard");
-const ordersRoutes = require("./routes/orders");
-const settingsRoutes = require("./routes/settings");
+// const ordersRoutes = require("./routes/orders");
+// const settingsRoutes = require("./routes/settings");
 
 const app = express();
 
@@ -38,8 +38,8 @@ app.get('/', (req, res) => {
 app.post('/route/auth/google', googleAuthRoute);
 
 app.use("/route/dashboard", dashboardRoutes);
-app.use("/route/orders", ordersRoutes);
-app.use("/route/settings", settingsRoutes);
+// app.use("/route/orders", ordersRoutes);
+// app.use("/route/settings", settingsRoutes);
 
 // ===============================
 // Menu API
