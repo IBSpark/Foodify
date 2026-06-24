@@ -61,7 +61,7 @@ function AnimatedRoutes() {
             </motion.div>
           }
         /> */}
-        {/* <Route
+        <Route
           path="/signmodal"
           element={
             <motion.div
@@ -73,7 +73,7 @@ function AnimatedRoutes() {
               <SignModal />
             </motion.div>
           }
-        /> */}
+        />
         
         {/* <Route
           path="/dashboard"
