@@ -7,8 +7,8 @@ const connectDB = require("./config/db");
 connectDB();
 const googleAuthRoute = require('./controllers/googleAuthRoute');
 const dashboardRoute = require("./routes/dashboard");
-const ordersRoute = require("./routes/orders");
-// const settingsRoute = require("./routes/settings");
+// const ordersRoute = require("./routes/orders");
+const settingsRoute = require("./routes/settings");
 
 const app = express();
 
@@ -38,14 +38,14 @@ app.get('/', (req, res) => {
 app.post('/route/auth/google', googleAuthRoute);
 
 app.use("/routes/dashboard", dashboardRoute);
-app.use("/routes/orders", ordersRoutes);
-// app.use("/routes/settings", settingsRoutes);
+// app.use("/routes/orders", ordersRoutes);
+app.use("/routes/settings", settingsRoutes);
 
 // ===============================
 // Menu API
 // ===============================
 
-app.get('/api/menu', (req, res) => {
+app.get('/routes/menu', (req, res) => {
   res.json([
     { title: "Burger", price: 500, type: "Fast Food" },
     { title: "Pizza", price: 800, type: "Italian" },
