@@ -7,7 +7,7 @@ const connectDB = require("./config/db");
 connectDB();
 const googleAuthRoute = require('./controllers/googleAuthRoute');
 const dashboardRoute = require("./routes/dashboard");
-const ordersRoute = require("./routes/orders");
+// const ordersRoute = require("./routes/orders");
 // const settingsRoute = require("./routes/settings");
 
 const app = express();
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 app.post('/route/auth/google', googleAuthRoute);
 
 app.use("/routes/dashboard", dashboardRoute);
-app.use("/routes/orders", ordersRoutes);
+// app.use("/routes/orders", ordersRoutes);
 // app.use("/routes/settings", settingsRoutes);
 
 // ===============================
