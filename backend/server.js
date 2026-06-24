@@ -8,8 +8,8 @@ connectDB();
 
 const googleAuthRoute = require('./controllers/googleAuthRoute');
 const dashboardRoute = require("./routes/dashboard");
-const ordersRoute = require("./routes/orders");
-const settingsRoute = require("./routes/settings");
+// const ordersRoute = require("./routes/orders");
+// const settingsRoute = require("./routes/settings");
 
 const app = express();
 
@@ -33,8 +33,8 @@ app.get("/", (req, res) => {
 app.post("/route/auth/google", googleAuthRoute);
 
 app.use("/route/dashboard", dashboardRoute);
-app.use("/route/orders", ordersRoute);
-app.use("/route/settings", settingsRoute);
+// app.use("/route/orders", ordersRoute);
+// app.use("/route/settings", settingsRoute);
 
 app.get("/api/menu", (req, res) => {
   res.json([
