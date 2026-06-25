@@ -45,8 +45,8 @@ function Dashboard() {
     try {
       setLoading(true);
       const [ordersRes, productsRes] = await Promise.all([
-  axios.get(`${API_URL}/api/orders`),
-  axios.get(`${API_URL}/api/menu`)
+  axios.get(`${API_URL}/route/orders`),
+  axios.get(`${API_URL}/route/menu`)
 ]);
       setOrders(ordersRes.data);
       setProducts(productsRes.data);
